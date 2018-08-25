@@ -1,6 +1,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
 
 /**
@@ -57,6 +58,11 @@ const controlRecipe = async () => {
     const id = window.location.hash.replace('#', '');
 
     if (id) {
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+
+        if (state.search) searchView.highlightSelected(id);
+
         state.recipe = new Recipe(id);
 
         try{
@@ -66,11 +72,13 @@ const controlRecipe = async () => {
             state.recipe.calcTime();
             state.recipe.calcServings();
 
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
 
         }catch(error){
 
-            alert(error);
+            console.log(error);
+            console.log("possible type error for map when selecting multiple recipes before async finishes");
 
         }
     }
