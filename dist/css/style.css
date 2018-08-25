@@ -449,7 +449,8 @@ body {
     align-items: flex-start;
     padding: 1.3rem 0;
     border-bottom: 1px solid #F2EFEE;
-    position: relative; }
+    position: relative; 
+    color: white;}
   .shopping__count {
     flex: 0 0 7.5rem;
     padding: .4rem .5rem;
@@ -460,7 +461,7 @@ body {
     display: flex;
     justify-content: space-between; }
     .shopping__count input {
-      color: inherit;
+      color: black;
       font-family: inherit;
       font-size: 1.2rem;
       text-align: center;
