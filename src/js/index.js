@@ -1,12 +1,15 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
-import List from './models/List';
 import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
-import * as listView from './views/listView';
 import * as likesView from './views/likesView';
 import {elements, renderLoader, clearLoader} from './views/base';
+
+// To use shopping cart, uncomment shopping cart list sections in the following files
+// index.js, recipeView.js, List.js, listView.js, and index.html
+//import List from './models/List';
+//import * as listView from './views/listView';
 
 /**
  * Global state of the app
@@ -17,7 +20,6 @@ import {elements, renderLoader, clearLoader} from './views/base';
  */
 
 const state = {};
-window.state = state;
 
 const controlSearch = async () => {
     const query = searchView.getInput();
@@ -94,30 +96,32 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-const controlList = () => {
-    if (!state.list) state.list = new List();
+//controller for optional shopping cart
+// const controlList = () => {
+//     if (!state.list) state.list = new List();
 
-    state.recipe.ingredients.forEach( el => {
-        const item = state.list.addItem(el.count, el.unit, el.ingredient);
-        listView.renderItem(item);
-    });
-}
+//     state.recipe.ingredients.forEach( el => {
+//         const item = state.list.addItem(el.count, el.unit, el.ingredient);
+//         listView.renderItem(item);
+//     });
+// }
 
- ['click', 'keydown'].forEach( event => elements.shopping.addEventListener(event, e => {
-    const id = e.target.closest('.shopping__item').dataset.itemid;
+//event listeners for optional shopping cart
+//  ['click', 'keydown'].forEach( event => elements.shopping.addEventListener(event, e => {
+//     const id = e.target.closest('.shopping__item').dataset.itemid;
     
-    if (e.target.matches('.shopping__delete, .shopping__delete *')) {
-        state.list.deleteItem(id);
+//     if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+//         state.list.deleteItem(id);
 
-        listView.deleteItem(id);
-    } else if (e.target.matches('.shopping__count-value')) {
-        const val = parseFloat(e.target.value, 10);
-        state.list.updateCount(id, val);
-    } else if(e.keyCode === 13){
-        const val = parseFloat(e.target.value, 10);
-        state.list.updateCount(id, val);
-    }
-}));
+//         listView.deleteItem(id);
+//     } else if (e.target.matches('.shopping__count-value')) {
+//         const val = parseFloat(e.target.value, 10);
+//         state.list.updateCount(id, val);
+//     } else if(e.keyCode === 13){
+//         const val = parseFloat(e.target.value, 10);
+//         state.list.updateCount(id, val);
+//     }
+// }));
 
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
@@ -163,19 +167,9 @@ elements.recipe.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
     } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
-        controlList();
+        //shopping cart controller 
+        //controlList();
     } else if (e.target.matches('.recipe__love, .recipe__love *')) {
         controlLike();
     }
 })
-
-//window.l = new List();
-
-// const r = new Recipe(47746);
-// r.getRecipe();
-// r.getRecipe().then(result => {
-//     console.log(r.ingredients);
-//     r.calcTime();
-// });
-// console.log(r);
-// console.log(r.ingredients);

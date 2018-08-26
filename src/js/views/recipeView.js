@@ -1,3 +1,4 @@
+//if using the shopping cart, make sure to uncomment shopping cart button in render recipe methods markup
 import {elements} from './base';
 import {Fraction} from 'fractional';
 
@@ -7,15 +8,17 @@ export const clearRecipe = () => {
 
 const formatCount = (count) => {
     if (count) {
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
 
-        if (!dec) return count;
+        const newCount = Math.round(count * 10) / 10;
+        const [int, dec] = newCount.toString().split('.').map(el => parseInt(el, 10));
+
+        if (!dec) return newCount;
 
         if (int === 0) {
-            const fr = new Fraction(count);
+            const fr = new Fraction(newCount);
             return `${fr.numerator}/${fr.denominator}`;
         } else {
-            const fr = new Fraction(count - int);
+            const fr = new Fraction(newCount - int);
             return `${int} ${fr.numerator}/${fr.denominator}`;
         }
     }
@@ -81,18 +84,21 @@ export const renderRecipe = (recipe, isLiked) => {
     </div>
 
 
-
+    
     <div class="recipe__ingredients">
         <ul class="recipe__ingredient-list">
             ${recipe.ingredients.map(el => createIngredient(el)).join('')}
         </ul>
 
+        <!--
         <button class="btn-small recipe__btn--add">
             <svg class="search__icon">
                 <use href="img/icons.svg#icon-shopping-cart"></use>
             </svg>
             <span>Add to Shopping list</span>
         </button>
+        -->
+
     </div>
 
     <div class="recipe__directions">
