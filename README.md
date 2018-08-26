@@ -1,1 +1,1 @@
-This is a search engine for food recipes. It utilizes the food to fork api.
+This project produced an application that acts as a search engine for food recipes. This application utilizes ajax calls with fetch, async/await and promises. It implements various features via the node modules such as transpiling and polyfilling code for support in older browsers. It utilizes the web storage api to store information in the browser for persistent data.
